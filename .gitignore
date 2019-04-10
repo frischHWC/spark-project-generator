@@ -1,0 +1,12 @@
+# Python generated files
+__pycache__/*
+
+# Mac OS files
+.DS_Store
+
+# IntelliJ files
+.idea/*
+
+# Program Generated files
+target/*
+*.log

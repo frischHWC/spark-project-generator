@@ -1,0 +1,144 @@
+= Spark Generator Project
+
+This project aims at generate automatically new Spark project depending on language, compiler, features required by the user.
+
+== How to use it ?
+
+=== Prerequisites :
+
+- Python 3 must be installed
+If not install, please see this : https://realpython.com/installing-python/[https://realpython.com/installing-python/]
+
+- Jinja2 must be installed also
+
+If not, you can install it with :
+[source,bash]
+pip3 install jinja2
+
+=== Launch it :
+
+The command is described here (extracted from documentation) :
+
+[source,bash]
+usage: main.py [-h] --version {2.4.1,2.2.0}
+                --master {yarn}
+                --language {scala,java}
+                --projectName PROJECTNAME
+                --packageName PACKAGENAME
+                [--kerberos {True,False}]
+                [--principal PRINCIPAL]
+                [--keytab KEYTAB]
+                [--host HOST]
+                [--user USER]
+                [--compiler {maven,sbt}]
+                [--feature [{core,sql,structured_streaming,streaming} [{core,sql,structured_streaming,streaming} ...]]]
+                [--techs {}]
+                [--test {True,False}]
+                [--logger {True,False}]
+                [--compilation {True,False}]
+                [--sendFiles {True,False}]
+                [--docFiles {md,adoc}]
+
+Here are some examples of launch :
+
+- Scala maven project with Spark-SQL :
+
+[source,bash]
+python3 main.py --version 2.4.1 --master yarn --language scala --projectName spark_test --packageName com.cloudera.fri --feature sql
+
+
+- Scala maven project with Spark Core and Spark Structured Streaming, and Kerberos enabled :
+
+[source,bash]
+python3 main.py --version 2.4.1 --kerberos True --master yarn --language scala --projectName spark_test --packageName com.cloudera.fri --feature core structured_streaming  --principal fri --keytab fri.keytab
+
+
+- Scala sbt project with Spark Streaming, ready to launch on cluster :
+
+[source,bash]
+python3 main.py --version 2.4.1 --master yarn --language scala --projectName spark_test --packageName com.cloudera.fri --compiler sbt --compilation true --sendFiles true --feature streaming --host fri.machine.com --user fri
+
+
+- Java maven project with Spark core, ready to launch on cluster :
+
+[source,bash]
+python3 main.py --version 2.4.1 --master yarn --language java --projectName spark_test --packageName com.cloudera.fri --compilation true --sendFiles true --host fri.machine.com --user fri
+
+
+=== Where my project has been generated ?
+
+It is generated as a side folder to this project, do a 'ls ../' and you should see it, from where you launched the program.
+
+
+== Here is full documentation which shows current project possibilities :
+
+Documentation is generated with a 'python3 main.py -h'.
+
+[source,bash]
+----
+usage: main.py [-h] --version {2.4.1,2.2.0}
+                --master {yarn}
+                --language {scala,java}
+                --projectName PROJECTNAME
+                --packageName PACKAGENAME
+                [--kerberos {True,False}]
+                [--principal PRINCIPAL]
+                [--keytab KEYTAB]
+                [--host HOST]
+                [--user USER]
+                [--compiler {maven,sbt}]
+                [--feature [{core,sql,structured_streaming,streaming} [{core,sql,structured_streaming,streaming} ...]]]
+                [--techs {}]
+                [--test {True,False}]
+                [--logger {True,False}]
+                [--compilation {True,False}]
+                [--sendFiles {True,False}]
+                [--docFiles {md,adoc}]
+
+Generate a Spark project in language, version, and compiler needed
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version {2.4.1,2.2.0}
+                        Version of Spark to use
+  --master {yarn}       Master that Spark should use
+  --language {scala,java}
+                        Programming Language to write code
+  --projectName PROJECTNAME
+                        Name of the project to create (ex : rocket-launcher)
+  --packageName PACKAGENAME
+                        Name of the package where your project will be located
+                        (ex: com.cloudera.frisch)
+  --kerberos {True,False}
+                        Use of Kerberos or not (False by default)- If True,
+                        then following options must be filled : --principal
+                        and --keytab
+  --principal PRINCIPAL
+                        Kerberos principal
+  --keytab KEYTAB       Kerberos keytab file associated with previous
+                        principal
+  --host HOST           Host where Spark is deployed - It is used to prepare
+                        script submitting files
+  --user USER           User to access Host where Spark is deployed - It is
+                        used to prepare script submitting files
+  --compiler {maven,sbt}
+                        Compiler to use to compile the project (maven by
+                        Default) - Not needed if python is the language
+  --feature [{core,sql,structured_streaming,streaming} [{core,sql,structured_streaming,streaming} ...]]
+                        Spark Features to add to the project
+  --techs {}            Other technologies to add to the project
+  --test {True,False}   Add test files and directories - (False by default)
+  --logger {True,False}
+                        Add logger to project or not - (True by default)
+  --compilation {True,False}
+                        Launch a compilation/packaging of the project after
+                        its creation - (False by default)
+  --sendFiles {True,False}
+                        Send project files after creation and packaging
+                        (requires compilation argument to be set to True) -
+                        (False by default)
+  --docFiles {md,adoc}  Type of file to generate documentation files
+
+This program is intent to facilitate Spark developer's life.It comes with no
+license or support, just Enjoy it ;)
+----

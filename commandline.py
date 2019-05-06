@@ -14,18 +14,19 @@ def command_line_arguments_to_dict():
     parser = argparse.ArgumentParser(description='Generate a Spark project in language, version, and compiler needed',
                                      epilog="This program is intent to facilitate Spark developer's life."
                                             "It comes with no license or support, just Enjoy it ;)")
-
+    # Required arguments
     parser.add_argument('--version', required=True, type=str, choices=["2.4.1", "2.2.0"],
                         help="Version of Spark to use")
     parser.add_argument('--master', required=True, type=str, choices=["yarn"],
                         help="Master that Spark should use")
-    parser.add_argument('--language', required=True, type=str, choices=["scala", "java"],
+    parser.add_argument('--language', required=True, type=str, choices=["scala", "java", "python"],
                         help="Programming Language to write code")
     parser.add_argument('--projectName', required=True, type=str,
                         help="Name of the project to create (ex : rocket-launcher)")
     parser.add_argument('--packageName', required=True, type=str,
                         help="Name of the package where your project will be located (ex: com.cloudera.frisch)")
 
+    # Optional arguments
     parser.add_argument('--kerberos', type=bool, choices=[True, False], default=False,
                         help="Use of Kerberos or not (False by default)" +
                              "- If True, then following options must be filled : --principal and --keytab")
@@ -39,7 +40,7 @@ def command_line_arguments_to_dict():
     parser.add_argument('--user', type=str, default="",
                         help="User to access Host where Spark is deployed " +
                              "- It is used to prepare script submitting files")
-    parser.add_argument('--compiler', type=str, choices=["maven", "sbt"], default="maven",
+    parser.add_argument('--compiler', type=str, choices=["maven", "sbt", "none"], default="maven",
                         help="Compiler to use to compile the project (maven by Default) " +
                              "- Not needed if python is the language")
     parser.add_argument('--feature', type=str, choices=["core", "sql", "structured_streaming", "streaming"], nargs='*',
@@ -69,7 +70,7 @@ def check_command_lines(dict_of_options: dict):
 
     # Rule #1 : If language is java, compiler could not be sbt
 
-    # Rule #2 : If language is python, compiler must be python
+    # Rule #2 : If language is python, compiler must be none
 
     # Rule #3 : projectName should have only alphanumerical values with '-' and '_'
 

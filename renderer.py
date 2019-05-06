@@ -15,23 +15,28 @@ def render_code_files(env: Environment, language: str, feature, logger_needed: b
     :param package_name:
     :return:
     """
+    if language == "python":
+        language_extension = "py"
+    else:
+        language_extension = language
+
     # TODO : Add other languages here to Handle main files here
     write_template_to_file(
-        env.get_template("code/" + language + "/App." + language)
+        env.get_template("code/" + language + "/App." + language_extension)
            .render(language=language, feature=feature, logger=logger_needed, package_name=package_name),
-        "target/App." + language)
+        "target/App." + language_extension)
 
     # TODO : Add other languages here to Handle code files
     write_template_to_file(
-            env.get_template("code/" + language + "/Treatment." + language)
+            env.get_template("code/" + language + "/Treatment." + language_extension)
                .render(language=language, feature=feature, logger=logger_needed, package_name=package_name),
-            "target/Treatment." + language)
+            "target/Treatment." + language_extension)
 
     # TODO : Add other languages here to handle config file
     write_template_to_file(
-            env.get_template("code/" + language + "/AppConfig." + language)
+            env.get_template("code/" + language + "/AppConfig." + language_extension)
                .render(feature=feature, package_name=package_name),
-            "target/AppConfig." + language)
+            "target/AppConfig." + language_extension)
 
     logger.debug("Generated code files for language : %s with feature : %s", language, feature)
 
@@ -101,14 +106,13 @@ def render_script_files(env: Environment, language: str, master: str, feature, k
     :param user:
     :return:
     """
-    if language == "scala" or language == "java":
-        write_template_to_file(
+    write_template_to_file(
             env.get_template("scripts/spark-submit.sh")
                .render(language=language, master=master, project_name=project_name, kerberos=kerberos,
                        logger=logger_needed, package_name=package_name, principal=principal, keytab=keytab),
             "target/spark-submit.sh")
 
-        write_template_to_file(
+    write_template_to_file(
             env.get_template("scripts/copy_to_cluster.sh")
                .render(language=language, project_name=project_name, logger=logger_needed, compiler=compiler,
                        host=host, user=user),
@@ -140,10 +144,10 @@ def render_configuration_files(env: Environment, language: str, feature, project
 
     # TODO : Add other features here
     # TODO : Add more external variables here (taken from command line arguments)
-    write_template_to_file(
-            env.get_template("configuration/application.conf")
-               .render(feature=feature, project_name=project_name, master=master),
-            "target/application.conf")
+            write_template_to_file(
+                env.get_template("configuration/application.conf")
+                   .render(feature=feature, project_name=project_name, master=master),
+                "target/application.conf")
 
     logger.debug("Generated configuration files for language : %s", language)
 

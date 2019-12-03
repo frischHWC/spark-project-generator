@@ -15,7 +15,7 @@ def command_line_arguments_to_dict():
                                      epilog="This program is intent to facilitate Spark developer's life."
                                             "It comes with no license or support, just Enjoy it ;)")
     # Required arguments
-    parser.add_argument('--version', required=True, type=str, choices=["2.4.1", "2.2.0"],
+    parser.add_argument('--version', required=True, type=str, choices=["2.4.1", "2.2.0", "2.3.0", "2.3.1", "2.3.2", "2.3.3"],
                         help="Version of Spark to use")
     parser.add_argument('--master', required=True, type=str, choices=["yarn"],
                         help="Master that Spark should use")

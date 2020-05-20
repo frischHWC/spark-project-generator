@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
+{% if language == "python" %}# TODO : Change it according to your python path and which python version you want to use (or remove it if you want to use default python installed)
+export PYSPARK_PYTHON=python3{% endif %}
 spark-submit \
-    --class {{ package_name }}.App \
+    --class {% if language == "python" %}App.py{% else %}{{ package_name }}.App{% endif %} \
     --master {{ master }} \
     --deploy-mode cluster \{% if (language == "scala" or language == "java") and logger %}
     --files log4j.properties \
@@ -9,3 +11,5 @@ spark-submit \
     --principal {{ principal }} \
     --keytab {{ keytab }} \{% endif %}{% if language == "scala" or language == "java" %}
     {{ project_name }}-0.1-SNAPSHOT-jar-with-dependencies.jar -Dconfig.file=application.conf {% endif %}
+    {% if language == "python" %}--py-files python_files.zip \
+    App.py {% endif %}

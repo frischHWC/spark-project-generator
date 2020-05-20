@@ -45,6 +45,9 @@ def order_files(language: str, compiler: str, project_name: str, logger_needed: 
             copy_file("target/" + file, folder_path + "src/main/" + language + "/" + package_path + file)
     elif language == "python":
         create_folder(folder_path + "src/")
+        files = [f for f in os.listdir("target/") if ".py" in f and "test" not in f]
+        for file in files:
+            copy_file("target/" + file, folder_path + file)
 
     # Create and order test files folder
     # TODO : Add other languages here
@@ -52,9 +55,12 @@ def order_files(language: str, compiler: str, project_name: str, logger_needed: 
         create_folder(folder_path + "src/test/")
         files = [f for f in os.listdir("target/") if "." + language in f and "test" in f]
         for file in files:
-            copy_file("target/" + file, folder_path + "src/test/" + file)
+            copy_file("target/" + file, folder_path + "src/test/" + language + "/" + package_path + file)
     elif language == "python":
         create_folder(folder_path + "test/")
+        files = [f for f in os.listdir("target/") if ".py" in f and "test" in f]
+        for file in files:
+            copy_file("target/" + file, folder_path + "test/" + file)
 
     # Put compiler, script and doc files
     files = [f for f in os.listdir("target/") if ".xml" in f or ".sbt" in f or ".sh" in f or ".md" in f

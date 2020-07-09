@@ -76,33 +76,26 @@ Documentation is generated with a 'python3 main.py -h'.
 
 [source,bash]
 ----
-usage: main.py [-h] --version {2.4.1,2.2.0}
-                --master {yarn}
-                --language {scala,java}
-                --projectName PROJECTNAME
-                --packageName PACKAGENAME
-                [--kerberos {True,False}]
-                [--principal PRINCIPAL]
-                [--keytab KEYTAB]
-                [--host HOST]
-                [--user USER]
-                [--compiler {maven,sbt}]
-                [--feature [{core,sql,structured_streaming,streaming} [{core,sql,structured_streaming,streaming} ...]]]
-                [--techs {}]
-                [--test {True,False}]
-                [--logger {True,False}]
-                [--compilation {True,False}]
-                [--sendFiles {True,False}]
-                [--docFiles {md,adoc}]
+usage: main.py [-h] --version
+               {2.4.0.7.1.1.0-565,2.4.1,2.2.0,2.3.0,2.3.1,2.3.2,2.3.3}
+               --master {yarn} --language {scala,java,python} --projectName
+               PROJECTNAME --packageName PACKAGENAME [--kerberos {True,False}]
+               [--principal PRINCIPAL] [--keytab KEYTAB] [--host HOST]
+               [--user USER] [--compiler {maven,sbt,none}]
+               [--feature [{core,sql,structured_streaming,streaming} [{core,sql,structured_streaming,streaming} ...]]]
+               [--techs {}] [--test {True,False}] [--logger {True,False}]
+               [--compilation {True,False}] [--sendFiles {True,False}]
+               [--docFiles {md,adoc}] [--hdfsNameservice HDFSNAMESERVICE]
+               [--hdfsWorkDir HDFSWORKDIR]
 
 Generate a Spark project in language, version, and compiler needed
 
 optional arguments:
   -h, --help            show this help message and exit
-  --version {2.4.1,2.2.0}
+  --version {2.4.0.7.1.1.0-565,2.4.1,2.2.0,2.3.0,2.3.1,2.3.2,2.3.3}
                         Version of Spark to use
   --master {yarn}       Master that Spark should use
-  --language {scala,java}
+  --language {scala,java,python}
                         Programming Language to write code
   --projectName PROJECTNAME
                         Name of the project to create (ex : rocket-launcher)
@@ -121,7 +114,7 @@ optional arguments:
                         script submitting files
   --user USER           User to access Host where Spark is deployed - It is
                         used to prepare script submitting files
-  --compiler {maven,sbt}
+  --compiler {maven,sbt,none}
                         Compiler to use to compile the project (maven by
                         Default) - Not needed if python is the language
   --feature [{core,sql,structured_streaming,streaming} [{core,sql,structured_streaming,streaming} ...]]
@@ -138,6 +131,11 @@ optional arguments:
                         (requires compilation argument to be set to True) -
                         (False by default)
   --docFiles {md,adoc}  Type of file to generate documentation files
+  --hdfsNameservice HDFSNAMESERVICE
+                        Nameservice of the HDFS where Spark files will be
+                        deployed
+  --hdfsWorkDir HDFSWORKDIR
+                        HDFS work directory setup in configuration files
 
 This program is intent to facilitate Spark developer's life.It comes with no
 license or support, just Enjoy it ;)

@@ -19,11 +19,11 @@ def treatment_sql(spark):
     :param spark:
     :return:
     """
+    path = hdfs + hdfs_home_dir + "random-data.csv"
     df_init = spark.read \
-        .load(hdfs + hdfs_home_dir + "les-arbres.csv",
-              format="csv", sep=";", inferSchema="true", header="true")
+        .csv(path=path, header=True)
 
-    df_init.select("GENRE").show()
+    df_init.select("name").show()
     {% endif %}
 
 {% if "structured_streaming" is in feature %}
@@ -34,11 +34,11 @@ def treatment_structured_streaming(spark):
     :return:
     """
     df_streamed = spark.readStream \
-        .parquet(hdfs + hdfs_home_dir + "les-arbres.parquet")
+        .parquet(hdfs + hdfs_home_dir + "streaming/")
 
     df_streamed.writeStream.format("parquet") \
         .option("checkpointLocation", hdfs + hdfs_home_dir + "checkpoints/") \
-        .option("path", hdfs + hdfs_home_dir + "les-arbres2.parquet") \
+        .option("path", hdfs + hdfs_home_dir + "random-data-2.parquet") \
         .start()
 
     spark.streams.awaitAnyTermination()

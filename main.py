@@ -17,7 +17,9 @@ def main():
     clean_target()
 
     render_code_files(env, dict_of_options.get("language"), dict_of_options.get("feature"),
-                      dict_of_options.get("logger"), dict_of_options.get("packageName"))
+                      dict_of_options.get("logger"), dict_of_options.get("packageName"),
+                      dict_of_options.get("user"), dict_of_options.get("hdfsNameservice"),
+                      dict_of_options.get("hdfsWorkDir"))
 
     render_compiler_files(env, dict_of_options.get("compiler"), dict_of_options.get("version"),
                           dict_of_options.get("feature"), dict_of_options.get("projectName"),
@@ -32,7 +34,8 @@ def main():
 
     render_configuration_files(env, dict_of_options.get("language"), dict_of_options.get("feature"),
                                dict_of_options.get("projectName"), dict_of_options.get("master"),
-                               dict_of_options.get("logger"))
+                               dict_of_options.get("user"), dict_of_options.get("hdfsNameservice"),
+                               dict_of_options.get("logger"), dict_of_options.get("hdfsWorkDir"))
 
     render_doc_files(env, dict_of_options.get("language"), dict_of_options.get("master"),
                      dict_of_options.get("feature"), dict_of_options.get("compiler"),

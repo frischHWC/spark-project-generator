@@ -30,10 +30,10 @@ object Treatment {
 
   // TODO : Replace lines belows by your code using the SparkSession passed in argument
   val dfInit = spark.read
-    .option("sep", ";")
+    .option("sep", ",")
     .option("inferSchema", "true")
     .option("header", "true")
-    .csv(AppConfig.hdfs + AppConfig.hdfsHomeDir + "les-arbres.csv")
+    .csv(AppConfig.hdfs + AppConfig.hdfsHomeDir + "random-data.csv")
 
     dfInit.show(false)
 
@@ -47,11 +47,11 @@ object Treatment {
     // TODO : Replace lines belows by your code using the SparkSession passed in argument
 
     val dfStreamed = spark.readStream
-      .parquet(AppConfig.hdfs + AppConfig.hdfsHomeDir + "les-arbres.parquet")
+      .parquet(AppConfig.hdfs + AppConfig.hdfsHomeDir)
 
     dfStreamed.writeStream.format("parquet")
       .option("checkpointLocation", AppConfig.hdfs + AppConfig.hdfsHomeDir + "checkpoints/")
-      .option("path", AppConfig.hdfs + AppConfig.hdfsHomeDir + "les-arbres2.parquet")
+      .option("path", AppConfig.hdfs + AppConfig.hdfsHomeDir + "random-data-2.parquet")
       .start()
 
     spark.streams.awaitAnyTermination()

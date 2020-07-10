@@ -56,10 +56,10 @@ class Treatment {
 
     // First goal is to load, format and write data :)
     Dataset<Row> dfInit = spark.read()
-      .option("sep", ";")
+      .option("sep", ",")
       .option("inferSchema", "true")
       .option("header", "true")
-      .csv(appConfig.hdfs + appConfig.hdfsHomeDir + "les-arbres.csv");
+      .csv(appConfig.hdfs + appConfig.hdfsHomeDir + "random-data.csv");
 
     dfInit.show(false);
   }{% endif %}
@@ -73,11 +73,11 @@ class Treatment {
 
     // Goal is to send data to Kafka
     Dataset<Row> dfStreamed = spark.readStream()
-      .parquet(appConfig.hdfs + appConfig.hdfsHomeDir + "les-arbres.parquet");
+      .parquet(appConfig.hdfs + appConfig.hdfsHomeDir + "streaming/");
 
     dfStreamed.writeStream()
         .option("checkpointLocation", appConfig.hdfs + appConfig.hdfsHomeDir + "checkpoints/")
-        .format("csv").start(appConfig.hdfs + appConfig.hdfsHomeDir + "trees2.csv");
+        .format("csv").start(appConfig.hdfs + appConfig.hdfsHomeDir + "random-data-2.parquet");
 
     try {
       spark.streams().awaitAnyTermination();

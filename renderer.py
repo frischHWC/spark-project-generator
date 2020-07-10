@@ -5,7 +5,8 @@ from utils import write_template_to_file
 logger = logging.getLogger("spark_generator")
 
 
-def render_code_files(env: Environment, language: str, feature, logger_needed: bool, package_name: str):
+def render_code_files(env: Environment, language: str, feature, logger_needed: bool, package_name: str,  user: str,
+                               hdfs_nameservice: str, hdfs_work_dir: str):
     """
     Generate code files according to language and features needed
     :param env:
@@ -35,7 +36,8 @@ def render_code_files(env: Environment, language: str, feature, logger_needed: b
     # TODO : Add other languages here to handle config file
     write_template_to_file(
             env.get_template("code/" + language + "/AppConfig." + language_extension)
-               .render(feature=feature, package_name=package_name),
+               .render(feature=feature, package_name=package_name, user=user, hdfsNameservice=hdfs_nameservice,
+                       hdfsWorkDir=hdfs_work_dir),
             "target/AppConfig." + language_extension)
 
     logger.debug("Generated code files for language : %s with feature : %s", language, feature)
@@ -122,8 +124,8 @@ def render_script_files(env: Environment, language: str, master: str, feature, k
                  ", feature : %s, kerberos : %s, logger : %s", language, master, feature, kerberos, logger_needed)
 
 
-def render_configuration_files(env: Environment, language: str, feature, project_name: str, master: str,
-                               logger_needed: bool):
+def render_configuration_files(env: Environment, language: str, feature, project_name: str, master: str, user: str,
+                               hdfs_nameservice: str, logger_needed: bool, hdfs_work_dir: str):
     """
     Generate configuration file (for logging and external variables)
     :param env:
@@ -146,7 +148,8 @@ def render_configuration_files(env: Environment, language: str, feature, project
     # TODO : Add more external variables here (taken from command line arguments)
             write_template_to_file(
                 env.get_template("configuration/application.conf")
-                   .render(feature=feature, project_name=project_name, master=master),
+                   .render(feature=feature, project_name=project_name, master=master, user=user,
+                           hdfsNameservice=hdfs_nameservice, hdfsWorkDir=hdfs_work_dir),
                 "target/application.conf")
 
     logger.debug("Generated configuration files for language : %s", language)

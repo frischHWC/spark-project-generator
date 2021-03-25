@@ -8,12 +8,12 @@
 
 
 # Generate docs
-python3 main.py \
-    --version 2.4.0.7.1.1.0-565 \
+/usr/local/Cellar/python@3.9/3.9.1_6/bin/python3 main.py \
+    --version 2.4.0.7.1.5.0-257 \
     --master yarn \
     --language scala \
-    --projectName spark_test \
-    --packageName com.cloudera.frisch \
+    --projectName spark_sql \
+    --packageName com.cloudera.nlaille \
     --compilation true \
     --compiler maven \
     --sendFiles true \

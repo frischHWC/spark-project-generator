@@ -9,14 +9,14 @@
 
 # Generate docs
 /usr/local/Cellar/python@3.9/3.9.1_6/bin/python3 main.py \
-    --version 2.4.0.7.1.5.0-257 \
+    --version 2.4.7.7.1.7.0-551 \
     --master yarn \
-    --language scala \
-    --projectName spark_sql \
-    --packageName com.cloudera.nlaille \
+    --language java \
+    --projectName spark_sql_java \
+    --packageName com.cloudera.frisch \
     --compilation true \
     --compiler maven \
-    --sendFiles true \
+    --sendFiles false \
     --kerberos true \
     --principal  dev \
     --keytab /home/dev/dev.keytab \

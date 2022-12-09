@@ -1,3 +1,21 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#  http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
 #!/usr/bin/env bash
 
 # Goal of this is to setup a complete test
@@ -8,19 +26,19 @@
 
 
 # Generate docs
-/usr/local/Cellar/python@3.9/3.9.1_6/bin/python3 main.py \
+/usr/local/Cellar/python@3.9/3.9.14/bin/python3.9 main.py \
     --version 2.4.7.7.1.7.0-551 \
     --master yarn \
-    --language java \
-    --projectName spark_sql_java \
+    --language scala \
+    --projectName spark_hdfs_example \
     --packageName com.cloudera.frisch \
-    --compilation true \
+    --compilation false \
+    --feature sql \
     --compiler maven \
     --sendFiles false \
     --kerberos true \
-    --principal  dev \
-    --keytab /home/dev/dev.keytab \
-    --feature sql \
+    --principal francois \
+    --keytab /home/francois/francois.keytab \
     --host ${HOST} \
     --user ${USER} \
     --hdfsNameservice ${NAMESERVICE} \

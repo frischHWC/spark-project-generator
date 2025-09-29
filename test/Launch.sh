@@ -24,17 +24,22 @@
 #export USER=
 #export HDFS_WORK_DIR=
 
+export HOST=ccycloud-1.datagen.root.comops.site
+export NAMESERVICE=datagen
+export USER=root
+export HDFS_WORK_DIR=/user/francois
+
 
 # Generate docs
-/usr/local/Cellar/python@3.9/3.9.14/bin/python3.9 main.py \
-    --version 2.4.7.7.1.7.0-551 \
+python3 main.py \
+    --version 2.4.8.7.1.9.1010-2 \
     --master yarn \
-    --language scala \
-    --projectName spark_hdfs_example \
+    --language python \
+    --projectName sample_jobs \
     --packageName com.cloudera.frisch \
     --compilation false \
     --feature sql \
-    --compiler maven \
+    --compiler none \
     --sendFiles false \
     --kerberos true \
     --principal francois \
@@ -45,12 +50,12 @@
     --hdfsWorkDir ${HDFS_WORK_DIR}
 
 # Send data files on cluster
-scp ${PWD}/test/random-data.* ${USER}@${HOST}:~/spark_test/
+#scp ${PWD}/test/random-data.* ${USER}@${HOST}:~/spark_test/
 
 # Prepare files in HDFS
-ssh ${USER}@${HOST} "hdfs dfs -mkdir -p ${HDFS_WORK_DIR}/streaming/"
-ssh ${USER}@${HOST} "hdfs dfs -put ~/spark_test/random-data.* ${HDFS_WORK_DIR}"
-ssh ${USER}@${HOST} "hdfs dfs -put ~/spark_test/random-data.parquet ${HDFS_WORK_DIR}/streaming/"
+#ssh ${USER}@${HOST} "hdfs dfs -mkdir -p ${HDFS_WORK_DIR}/streaming/"
+#ssh ${USER}@${HOST} "hdfs dfs -put ~/spark_test/random-data.* ${HDFS_WORK_DIR}"
+#ssh ${USER}@${HOST} "hdfs dfs -put ~/spark_test/random-data.parquet ${HDFS_WORK_DIR}/streaming/"
 
 # Launch treatment from here
 echo "********** Launching Spark Treatment **********"
